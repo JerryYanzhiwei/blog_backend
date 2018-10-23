@@ -1,10 +1,6 @@
 # blog_backend
-<<<<<<< HEAD
+
 my blog's backend
-=======
-<<<<<<< HEAD
-my blog's backend
-=======
 
 ## Project setup
 ```
