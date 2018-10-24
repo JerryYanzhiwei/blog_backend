@@ -3,9 +3,9 @@
     <el-row class="tac">
       <el-col :span="3">
         <el-menu
-          default-active="2"
+          default-active="1"
           class="el-menu-vertical-demo"
-          background-color="#6f5499"
+          background-color="#20272C"
           text-color="#fff"
           active-text-color="#ffd04b">
           <router-link to="summary">
@@ -21,9 +21,14 @@
         </el-menu>
       </el-col>
       <el-col class="content" :span="21">
-        <div class="header">
-          id
-        </div>
+        <el-row class="header">
+          <el-col class="userName" :span="5">
+            用户名
+          </el-col>
+          <el-col :offset="16" :span="3">
+            登出
+          </el-col>
+        </el-row>
         <router-view />
       </el-col>
     </el-row>
@@ -38,9 +43,6 @@ export default {
     }
   },
   methods: {
-    goLink (url) {
-      this.$router.push(`/index${url}`)
-    }
   }
 }
 </script>
@@ -57,6 +59,11 @@ export default {
           height: 100%;
           text-align: center;
           border: 0;
+          padding: 0 5px;
+          li {
+            padding: 0!important;
+            border-bottom: 1px solid #34414a;
+          }
         }
       }
     }
@@ -64,8 +71,17 @@ export default {
       width: 100%;
       float: right;
       height: 40px;
-      background-color: #222;
+      background-color: #20272C;
       color: #fff;
+      display: flex;
+      align-items: center;
+      & > div {
+        text-align: center;
+      }
+      .userName{
+        padding-left: 20px;
+        text-align: left;
+      }
     }
   }
 </style>

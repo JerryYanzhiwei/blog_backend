@@ -4,15 +4,15 @@
       <h3>登录</h3>
       <el-form label-position="right" label-width="80px" :model="form">
         <el-form-item label="用户名">
-          <el-input v-model="form.userName"></el-input>
+          <el-input placeholder="请填写3-10位用户名" v-model="form.userName"></el-input>
         </el-form-item>
         <el-form-item label="密码">
-          <el-input type="password" v-model="form.password"></el-input>
+          <el-input placeholder="请填写3-10位密码" type="password" v-model="form.password"></el-input>
         </el-form-item>
       </el-form>
       <div class="btn_contain">
-        <van-button class="register_btn" size="small" :loading="openLoading" @click="register" plain type="primary">注册</van-button>
-        <van-button class="login_btn" type="primary" size="small">登录</van-button>
+        <van-button v-if="false" class="register_btn" size="small" :loading="openLoading" @click="register" plain type="primary">注册</van-button>
+        <van-button class="login_btn" type="primary" :loading="loginLoading" size="small" @click="login">登录</van-button>
       </div>
     </div>
   </div>
@@ -25,6 +25,7 @@ export default {
   data () {
     return {
       openLoading: false, // 是否开启用户注册的loading状态
+      loginLoading: false,
       form: {
         userName: '',
         password: ''
@@ -32,13 +33,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions('user', ['registerAPI']),
-    async register () {
+    ...mapActions('user', ['registerAPI', 'loginAPI']),
+    validataForm () {
       let nameReg = /[a-zA-Z0-9]{3,10}/
       if (!nameReg.test(this.form.userName) || !nameReg.test(this.form.password)) {
-        this.$message('请填写用户名或密码')
-        return
+        this.$message('请正确填写用户名或密码')
+        return false
+      } else {
+        return true
       }
+    },
+    async register () {
+      if (!this.validataForm()) return
       this.openLoading = true
       let params = {
         userName: this.form.userName,
@@ -50,6 +56,7 @@ export default {
           message: res.message,
           type: 'success'
         })
+        this.openLoading = false
         this.$router.push('/index')
       } else {
         if (res.message.errmsg.indexOf('userName_1') !== -1) {
@@ -59,6 +66,38 @@ export default {
           })
           this.openLoading = false
         }
+      }
+    },
+    async login () {
+      if (!this.validataForm()) return
+      this.loginLoading = true
+      let params = {
+        userName: this.form.userName,
+        password: this.form.password
+      }
+      let res = await this.loginAPI(params)
+      if (res.code === 200) {
+        if (res.message) {
+          this.$message({
+            message: '登录成功',
+            type: 'success'
+          })
+          this.$router.push('/index')
+        } else {
+          this.$message.error('用户名或密码错误')
+          this.loginLoading = false
+        }
+        // this.openLoading = false
+      } else if (res.code === 9000) {
+        this.$message.warning(res.message)
+        this.loginLoading = false
+      } else {
+        // TODO 登录失败
+        this.$message({
+          message: '登录失败',
+          type: 'waring'
+        })
+        this.loginLoading = false
       }
     }
   }
