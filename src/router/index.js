@@ -10,7 +10,25 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+      component: () => import('../views/Home.vue')
+    },
+    {
+      path: '/index',
+      name: 'index',
+      redirect: '/index/summary',
+      component: () => import('../views/index.vue'),
+      children: [
+        {
+          path: 'summary',
+          name: 'all',
+          component: () => import('../views/summary/summary.vue')
+        },
+        {
+          path: 'article',
+          name: 'article',
+          component: () => import('../views/article/article.vue')
+        }
+      ]
     }
   ]
 })

@@ -11,8 +11,8 @@
         </el-form-item>
       </el-form>
       <div class="btn_contain">
-        <el-button @click="register" type="info">注册</el-button>
-        <el-button type="success">登录</el-button>
+        <van-button class="register_btn" size="small" :loading="openLoading" @click="register" plain type="primary">注册</van-button>
+        <van-button class="login_btn" type="primary" size="small">登录</van-button>
       </div>
     </div>
   </div>
@@ -24,6 +24,7 @@ export default {
   name: 'home',
   data () {
     return {
+      openLoading: false, // 是否开启用户注册的loading状态
       form: {
         userName: '',
         password: ''
@@ -33,12 +34,32 @@ export default {
   methods: {
     ...mapActions('user', ['registerAPI']),
     async register () {
+      let nameReg = /[a-zA-Z0-9]{3,10}/
+      if (!nameReg.test(this.form.userName) || !nameReg.test(this.form.password)) {
+        this.$message('请填写用户名或密码')
+        return
+      }
+      this.openLoading = true
       let params = {
         userName: this.form.userName,
         password: this.form.password
       }
       let res = await this.registerAPI(params)
-      console.log(res)
+      if (res.code === 200) {
+        this.$message({
+          message: res.message,
+          type: 'success'
+        })
+        this.$router.push('/index')
+      } else {
+        if (res.message.errmsg.indexOf('userName_1') !== -1) {
+          this.$message({
+            message: '用户名已被占用',
+            type: 'warning'
+          })
+          this.openLoading = false
+        }
+      }
     }
   }
 }
@@ -76,6 +97,9 @@ export default {
       .btn_contain{
         text-align: right;
         padding-right: 40px;
+        .register_btn{
+          margin-right: 10px;
+        }
       }
     }
   }
