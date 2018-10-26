@@ -1,6 +1,6 @@
 <template>
   <div class="contain">
-    <h3>文章列表</h3>
+    <h3>文章列表<router-link to='add_article'>添加文章</router-link></h3>
     <div class="form_contain">
       <el-table
       :data="tableData"
@@ -93,6 +93,12 @@ export default {
       padding-left: 20px;
       font-size: 20px;
       text-align: left;
+      a {
+        margin-right: 20px;
+        float: right;
+        font-size: 14px;
+        color: #409EFF;
+      }
     }
     .form_contain {
       margin-top: 20px;

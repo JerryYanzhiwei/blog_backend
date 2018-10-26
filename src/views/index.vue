@@ -23,7 +23,7 @@
       <el-col class="content" :span="21">
         <el-row class="header">
           <el-col class="userName" :span="5">
-            用户名
+            {{userInfo.loginUser}}
           </el-col>
           <el-col :offset="16" :span="3">
             登出
@@ -36,11 +36,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
       msg: ''
     }
+  },
+  computed: {
+    ...mapState('user', ['userInfo'])
   },
   methods: {
   }
@@ -51,6 +55,7 @@ export default {
   .inxdex_contain{
     width: 100%;
     height: 100%;
+    overflow: hidden;
     .tac{
       height: 100%;
       & > div{

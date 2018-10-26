@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   name: 'home',
   data () {
@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['registerAPI', 'loginAPI']),
+    ...mapMutations('user', ['setUser', 'setLogin']),
     validataForm () {
       let nameReg = /[a-zA-Z0-9]{3,10}/
       if (!nameReg.test(this.form.userName) || !nameReg.test(this.form.password)) {
@@ -56,7 +57,8 @@ export default {
           message: res.message,
           type: 'success'
         })
-        this.openLoading = false
+        this.setUser(res.data)
+        this.setLogin(true)
         this.$router.push('/index')
       } else {
         if (res.message.errmsg.indexOf('userName_1') !== -1) {
@@ -82,6 +84,8 @@ export default {
             message: '登录成功',
             type: 'success'
           })
+          this.setUser(res.data)
+          this.setLogin(true)
           this.$router.push('/index')
         } else {
           this.$message.error('用户名或密码错误')

@@ -4,13 +4,19 @@ export default {
   namespaced: true,
   state () {
     return {
-      userName: null
+      userInfo: {
+        loginUser: null
+      },
+      isLogin: false
     }
   },
   mutations: {
-    // setUser (state, data) {
-    //   state.userName = data
-    // }
+    setUser (state, data) {
+      state.userInfo = data
+    },
+    setLogin (state, data) {
+      state.isLogin = data
+    }
   },
   actions: {
     // 用户注册

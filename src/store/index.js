@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import user from './user'
+import article from './article'
 
 Vue.prototype.$http = axios
 
@@ -23,6 +24,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    user
+    user,
+    article
   }
 })
