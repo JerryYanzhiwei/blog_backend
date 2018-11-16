@@ -22,6 +22,11 @@
         <el-form-item label="文章内容" prop="content">
           <el-input type="textarea" v-model="articleData.content"></el-input>
         </el-form-item>
+        <!-- 图片 -->
+        <form action="http://127.0.0.1:3000/upload/upload" method="post" enctype="multipart/form-data">
+          <input type="file" name="file"/>
+          <input type="submit" value="ok"/>
+        </form>
         <el-button class="submit" @click="submitData('articleData')" type="primary" size="small">提交</el-button>
       </el-form>
     </div>

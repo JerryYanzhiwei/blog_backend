@@ -10,7 +10,7 @@ export default {
       isLogin: false
     }
   },
-  mutations: {
+  muations: {
     setUser (state, data) {
       state.userInfo = data
     },
