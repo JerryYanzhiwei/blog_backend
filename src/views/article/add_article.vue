@@ -1,7 +1,6 @@
 <template>
   <div class="contain">
-    <h3>编辑文章
-    </h3>
+    <h3> <span class="back" @click="back"> &lt;返回</span> 编辑文章</h3>
     <div class="scroll_contain">
       <el-form ref="articleData" label-position="left" :rules="rules" label-width="80px" :model="articleData">
         <el-form-item label="分类" prop="classify">
@@ -95,6 +94,9 @@ export default {
   },
   methods: {
     ...mapActions('article', ['addArticle', 'getArticleDetail', 'editArticle']),
+    back () {
+      this.$router.go(-1)
+    },
     beforeUpload (file) {
       const isJPG = file.type === 'image/jpeg'
       const is2m = file.size
@@ -117,6 +119,7 @@ export default {
         if (valid) {
           let res = await this.addArticle(this.articleData)
           if (res.code === 200) {
+            this.$message.success('文章创建成功')
             this.$router.push('article')
           }
         } else {
@@ -136,6 +139,10 @@ export default {
     },
     async editData () {
       let res = await this.editArticle(this.articleData)
+      if (res.code === 200) {
+        this.$message.success('文章编辑成功')
+        this.$router.push('article')
+      }
       console.log(res)
     }
   }
@@ -152,6 +159,12 @@ export default {
   .scroll_contain {
     height: 95%;
     overflow-y: auto;
+  }
+  .back {
+    font-size: 14px;
+    color: #409EFF;
+    cursor: pointer;
+    margin-right: 20px;
   }
   h3 {
     margin-top: 10px;
@@ -209,4 +222,5 @@ export default {
   width: 80px;
   height: 80px;
 }
+
 </style>

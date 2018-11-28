@@ -23,10 +23,12 @@
       <el-col class="content" :span="21">
         <el-row class="header">
           <el-col class="userName" :span="5">
-            {{userInfo.loginUser}}
+            {{loginName}}
           </el-col>
           <el-col :offset="16" :span="3">
-            登出
+            <span class="cursor" @click="logout">
+              Logout
+            </span>
           </el-col>
         </el-row>
         <router-view />
@@ -40,18 +42,29 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      msg: ''
+      msg: '',
+      loginName: ''
     }
   },
   computed: {
     ...mapState('user', ['userInfo'])
   },
+  mounted () {
+    this.loginName = sessionStorage.getItem('loginUser')
+  },
   methods: {
+    logout () {
+      sessionStorage.removeItem('loginUser')
+      this.$router.push('/')
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped tyepe="text/css">
+  .cursor {
+    cursor: pointer;
+  }
   .inxdex_contain{
     width: 100%;
     height: 100%;

@@ -1,11 +1,16 @@
 <template>
   <div class="contain">
-    <h3>文章列表<router-link to='add_article'>添加文章</router-link></h3>
+    <h3>
+      文章列表
+      <!-- <router-link to='add_article'>添加文章</router-link> -->
+      <el-button @click="go('add_article')" type="info" plain>添加文章</el-button>
+    </h3>
     <div class="form_contain">
       <el-table
       :data="tableData"
+      stripe
       border
-      style="width: 80%">
+      style="width: 64%">
         <!-- 分类 -->
         <el-table-column
           prop="classify"
@@ -16,7 +21,7 @@
         <el-table-column
           prop="title"
           label="标题"
-          width="280">
+          width="455">
         </el-table-column>
         <!-- 作者 -->
         <el-table-column
@@ -40,7 +45,7 @@
           width="100">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="medium">查看</el-button>
-            <el-button type="text" size="medium">编辑</el-button>
+            <el-button @click="handleDelete(scope.row)" type="text" size="medium">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -67,7 +72,7 @@ export default {
     this.getArticles()
   },
   methods: {
-    ...mapActions('article', ['getArticle']),
+    ...mapActions('article', ['getArticle', 'deleteArticle']),
     handleClick (data) {
       this.$router.push({
         path: 'add_article',
@@ -75,6 +80,18 @@ export default {
           _id: data._id
         }
       })
+    },
+    go (url) {
+      this.$router.push(url)
+    },
+    async handleDelete (data) {
+      let res = await this.deleteArticle({
+        id: data._id
+      })
+      if (res.code === 200) {
+        this.$message.success('删除成功')
+        this.$router.go(0)
+      }
     },
     pageChange (page) {
       console.log(page)
@@ -98,11 +115,11 @@ export default {
       padding-left: 20px;
       font-size: 20px;
       text-align: left;
-      a {
+      .el-button {
         margin-right: 20px;
         float: right;
         font-size: 14px;
-        color: #409EFF;
+        // color: #409EFF;
       }
     }
     .form_contain {

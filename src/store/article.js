@@ -37,6 +37,13 @@ export default {
         data: res
       } = await axios.post('article/edit_article', data)
       return res
+    },
+    // 删除文章
+    async deleteArticle (store, data) {
+      let {
+        data: res
+      } = await axios.post('article/delete_article', data)
+      return res
     }
   }
 }
