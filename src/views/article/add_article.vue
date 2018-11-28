@@ -29,14 +29,14 @@
         </form> -->
         <el-form-item class="up_img_contain" label="上传图片">
           <el-upload class="upload_contain"
-            action = "http://localhost:3000/api/article/upload"
+            action = "http://www.jerryzw.top/api/article/upload"
             :show-file-list = "false"
             :before-upload = "beforeUpload"
             :on-success = "successUpload"
             :multiple = 'false'
             :limit = '1'
           >
-            <img v-if="imgUrl" :src="imgUrl" alt="">
+            <img class="view_img" v-if="imgUrl" :src="imgUrl" alt="">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
@@ -204,5 +204,9 @@ export default {
   label {
     line-height: 80px;
   }
+}
+.view_img {
+  width: 80px;
+  height: 80px;
 }
 </style>
