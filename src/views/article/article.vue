@@ -26,7 +26,7 @@
         </el-table-column>
         <!-- 发布时间 -->
         <el-table-column
-          prop="createTime"
+          prop="createAt"
           label="发布时间"
           width="120">
         </el-table-column>
@@ -36,12 +36,11 @@
           width="120">
         </el-table-column>
         <el-table-column
-          fixed="right"
           label="操作"
           width="100">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button @click="handleClick(scope.row)" type="text" size="medium">查看</el-button>
+            <el-button type="text" size="medium">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,26 +56,33 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
-      tableData: [
-        {
-          classify: '分类',
-          title: '这是一个标题',
-          author: '作者',
-          createTime: '发布时间',
-          source: '来源'
-        }
-      ]
+      tableData: []
     }
   },
+  mounted () {
+    this.getArticles()
+  },
   methods: {
+    ...mapActions('article', ['getArticle']),
     handleClick (data) {
-      console.log(data)
+      console.log('*************', data)
+      this.$router.push({
+        path: 'add_article',
+        query: {
+          _id: data._id
+        }
+      })
     },
     pageChange (page) {
       console.log(page)
+    },
+    async getArticles () {
+      let res = await this.getArticle()
+      this.tableData = res.data
     }
   }
 }

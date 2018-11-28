@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '../store'
+// import store from '../store'
 
 Vue.use(Router)
 
@@ -36,14 +36,14 @@ const routes = [
 ]
 
 const router = new Router({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path.indexOf('index') !== -1 && !store.state.user.isLogin) {
-    // router.push('/')
+  if (to.path.indexOf('index') !== -1 && !sessionStorage.getItem('loginUser')) {
+    router.push('/')
   }
   next()
 })

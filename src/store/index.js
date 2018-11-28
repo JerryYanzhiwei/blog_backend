@@ -6,7 +6,11 @@ import article from './article'
 
 Vue.prototype.$http = axios
 
-axios.defaults.baseURL = 'http://localhost:3000/'
+// 线上环境
+axios.defaults.baseURL = 'http://www.jerryzw.top/api/'
+
+// 测试
+// axios.defaults.baseURL = 'http://localhost:3000/api/'
 
 axios.defaults.timeout = 5000
 
