@@ -69,7 +69,6 @@ export default {
   methods: {
     ...mapActions('article', ['getArticle']),
     handleClick (data) {
-      console.log('*************', data)
       this.$router.push({
         path: 'add_article',
         query: {

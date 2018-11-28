@@ -7,7 +7,7 @@
           <el-input placeholder="请填写3-10位用户名" v-model="form.userName"></el-input>
         </el-form-item>
         <el-form-item label="密码">
-          <el-input placeholder="请填写3-10位密码" type="password" v-model="form.password"></el-input>
+          <el-input @keyup.enter.native='login()' placeholder="请填写3-10位密码" type="password" v-model="form.password"></el-input>
         </el-form-item>
       </el-form>
       <div class="btn_contain">
@@ -88,13 +88,13 @@ export default {
           this.setLogin(true)
           sessionStorage.setItem('loginUser', res.data.loginUser)
           this.$router.push('/index')
-        } else {
-          this.$message.error('用户名或密码错误')
-          this.loginLoading = false
         }
         // this.openLoading = false
       } else if (res.code === 9000) {
         this.$message.warning(res.message)
+        this.loginLoading = false
+      } else if (res.code === 500) {
+        this.$message.error('用户名或密码错误')
         this.loginLoading = false
       } else {
         // TODO 登录失败

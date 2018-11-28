@@ -26,7 +26,6 @@ export default {
     },
     // 获取文章详情
     async getArticleDetail (store, data) {
-      console.log('/*************************/', data)
       let {
         data: res
       } = await axios.get('article/get_article_detail', data)
