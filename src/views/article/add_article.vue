@@ -9,6 +9,9 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="articleData.title"></el-input>
         </el-form-item>
+        <el-form-item label="描述" prop="discript">
+          <el-input v-model="articleData.discript"></el-input>
+        </el-form-item>
         <el-form-item label="作者" prop="author">
           <el-input v-model="articleData.author"></el-input>
         </el-form-item>
@@ -69,6 +72,10 @@ export default {
         title: [
           { required: true, message: '请输入标题', trigger: 'blur' },
           { min: 2, max: 20, message: '长度在2到20个字符', trigger: 'blur' }
+        ],
+        discript: [
+          { required: true, message: '请输入描述', trigger: 'blur' },
+          { min: 2, max: 40, message: '长度在2到20个字符', trigger: 'blur' }
         ],
         author: [
           { required: true, message: '请输入作者', trigger: 'blur' },
@@ -143,7 +150,6 @@ export default {
         this.$message.success('文章编辑成功')
         this.$router.push('article')
       }
-      console.log(res)
     }
   }
 }
