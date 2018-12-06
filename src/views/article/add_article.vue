@@ -75,7 +75,7 @@ export default {
         ],
         discript: [
           { required: true, message: '请输入描述', trigger: 'blur' },
-          { min: 2, max: 40, message: '长度在2到20个字符', trigger: 'blur' }
+          { min: 2, max: 40, message: '长度在2到40个字符', trigger: 'blur' }
         ],
         author: [
           { required: true, message: '请输入作者', trigger: 'blur' },
